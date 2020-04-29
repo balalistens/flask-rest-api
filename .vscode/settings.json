@@ -1,0 +1,10 @@
+{
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "editor.defaultFormatter": "ms-python.python",
+    "python.formatting.provider": "black",
+    "python.sortImports.args": [
+        "-rc",
+        "-sp isort.cfg"
+    ],
+}
