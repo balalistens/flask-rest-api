@@ -26,5 +26,5 @@ $ pip install -r requirements.txt       # Install the pip dependencies
 Run the server
 
 ```bash
-$ python src/server.py                  # Run the python server
+$ python src/app.py                  # Run the python server
 ```
