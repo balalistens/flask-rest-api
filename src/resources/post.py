@@ -28,7 +28,35 @@ class PostResource(Resource):
         """ Return a list of top posts based on the number of comments """
 
         try:
+            posts_dict = {}
+
             r = requests.get(JSON_API_URL + "/posts")
-            return jsonify({"posts": r.json()})
+            posts_list = r.json()
+
+            r = requests.get(JSON_API_URL + "/comments")
+            comments = r.json()
+
+            # dict/list comprehension is the fastest way to iterate - O(n)
+            posts_dict = {
+                post["id"]: dict(post, **{"commentsCount": 0}) for post in posts_list
+            }
+
+            # O(n)
+            for comment in comments:
+                if comment["postId"] in posts_dict and comment["postId"]:
+                    posts_dict[comment["postId"]]["commentsCount"] += 1
+
+            # O(n)
+            posts_list = [post for post in posts_dict.values()]
+
+            # sorted: worstcase: O(n log n) - provided the key function is O(1)
+            posts_list = sorted(
+                posts_list, key=lambda post: post["commentsCount"], reverse=True
+            )
+
+            if top and top < len(posts_list):
+                posts_list = posts_list[:top]
+
+            return jsonify({"posts": posts_list})
         except requests.exceptions.RequestException:
             raise APIError("JSON Placeholder Service Unavailable", 503)
