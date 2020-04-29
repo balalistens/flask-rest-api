@@ -13,7 +13,10 @@ from util.helpers import filter_comments
 
 
 class CommentResource(Resource):
-    """ Verbs relative to the comments """
+    """ Verbs relative to the comments.
+        Ideal way to scale the search would be to query directly from the DB with pagination
+        and the right indices
+    """
 
     @staticmethod
     @parse_params(
