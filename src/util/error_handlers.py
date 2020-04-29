@@ -39,5 +39,6 @@ def register_custom_error_handlers(app):
     :type app: flask
     """
 
-    app.register_error_handler(Exception, handle_error)
+    if not app.debug:
+        app.register_error_handler(Exception, handle_error)
     app.register_error_handler(APIError, handle_api_error)

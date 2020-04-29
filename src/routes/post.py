@@ -1,5 +1,5 @@
 """
-Defines the blueprint for the users
+Defines the blueprint for the post
 """
 from flask import Blueprint
 from flask_restful import Api
